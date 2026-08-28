@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Amani | Apple Portfolio</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+
+<style>
+
+/* =====================================================
+RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+    background:black;
+
+    color:white;
+
+    overflow-x:hidden;
+
+    padding-top:70px;
+}
+
+
+/* =====================================================
+BACKGROUND
+===================================================== */
+
+canvas{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    z-index:-3;
+
+    opacity:0.9;
+
+    pointer-events:none;
+}
+
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(
+        circle at 20% 20%,
+        rgba(212,175,55,0.08),
+        transparent 40%
+    ),
+
+    radial-gradient(
+        circle at 80% 70%,
+        rgba(255,255,255,0.06),
+        transparent 50%
+    );
+
+    z-index:-2;
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+CURSOR
+===================================================== */
+
+.cursor-glow{
+
+    position:fixed;
+
+    width:300px;
+    height:300px;
+
+    background:
+
+    radial-gradient(
+        circle,
+        rgba(212,175,55,0.15),
+        transparent 60%
+    );
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    transform:
+    translate(-50%,-50%);
+
+    z-index:-1;
+}
+
+
+/* =====================================================
+SECTIONS
+===================================================== */
+
+.section{
+
+    min-height:100vh;
+
+    padding:120px 10%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    opacity:0;
+
+    transform:
+    translateY(80px)
+    scale(0.97);
+}
+
+
+/* =====================================================
+HERO
+===================================================== */
+
+.hero{
+
+    text-align:center;
+}
+
+
+.hero h1{
+
+    font-size:64px;
+
+    font-weight:700;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #fff,
+        #d4af37,
+        #fff
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+
+.hero p{
+
+    margin-top:20px;
+
+    opacity:0.7;
+
+    font-size:18px;
+}
+
+
+/* =====================================================
+ABOUT
+===================================================== */
+
+.about{
+
+    display:flex;
+
+    gap:40px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    url("image1.jpeg")
+    center/cover
+    no-repeat;
+
+    border-radius:25px;
+}
+
+
+.about::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    rgba(0,0,0,0.7);
+}
+
+
+.about > div{
+
+    position:relative;
+
+    z-index:2;
+}
+
+
+/* =====================================================
+GRID
+===================================================== */
+
+.grid{
+
+    display:grid;
+
+    gap:20px;
+}
+
+
+.grid-4{
+
+    grid-template-columns:
+    repeat(4,1fr);
+}
+
+
+/* =====================================================
+CARD
+===================================================== */
+
+.card{
+
+    height:180px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:18px;
+
+    transition:0.5s;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid
+    rgba(255,255,255,0.08);
+}
+
+
+.card:hover{
+
+    transform:
+    translateY(-10px)
+    scale(1.05);
+
+    background:
+    rgba(212,175,55,0.08);
+}
+
+
+/* =====================================================
+CERTIFICATES
+===================================================== */
+
+.cert-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:40px;
+
+    justify-items:center;
+
+    align-items:center;
+
+    max-width:1000px;
+
+    margin:auto;
+}
+
+
+.cert-card{
+
+    width:100%;
+
+    max-width:420px;
+
+    height:320px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    transition:0.5s;
+
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
+
+    background:
+    rgba(255,255,255,0.03);
+}
+
+
+.cert-card:hover{
+
+    transform:
+    scale(1.06);
+
+    box-shadow:
+    0 25px 60px
+    rgba(0,0,0,0.7);
+}
+
+
+.cert-card img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    padding:10px;
+}
+
+
+/* =====================================================
+VIDEO
+===================================================== */
+
+.video-box{
+
+    width:90%;
+
+    max-width:1000px;
+
+    height:550px;
+
+    margin:auto;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 20px 60px
+    rgba(0,0,0,0.6);
+
+    background:
+    rgba(255,255,255,0.05);
+}
+
+
+video{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+}
+
+
+/* =====================================================
+TEXT
+===================================================== */
+
+.glass-text{
+
+    padding:30px;
+
+    border-radius:25px;
+
+    line-height:2;
+
+    font-size:18px;
+
+    backdrop-filter:
+    blur(18px);
+
+    border:
+    1px solid
+    rgba(255,255,255,0.1);
+
+    background:
+    rgba(255,255,255,0.05);
+}
+
+
+/* =====================================================
+TITLES
+===================================================== */
+
+h2{
+
+    font-size:34px;
+
+    margin-bottom:20px;
+
+    color:#d4af37;
+}
+
+
+/* =====================================================
+NAVBAR
+===================================================== */
+
+.navbar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    padding:15px 8%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    z-index:9999;
+
+    background:
+    rgba(0,0,0,0.5);
+
+    backdrop-filter:
+    blur(15px);
+
+    -webkit-backdrop-filter:
+    blur(15px);
+
+    border-bottom:
+    1px solid
+    rgba(255,255,255,0.08);
+
+    /*
+    الحركة الخاصة بالاختفاء
+    */
+
+    transition:
+    transform 0.45s cubic-bezier(.4,0,.2,1),
+    opacity 0.35s ease;
+}
+
+
+/* =====================================================
+NAVBAR HIDDEN
+===================================================== */
+
+/*
+عندما نضيف hidden
+الشريط يطلع فوق الشاشة
+ويختفي
+*/
+
+.navbar.nav-hidden{
+
+    transform:
+    translateY(-110%);
+
+    opacity:0;
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+LOGO
+===================================================== */
+
+.navbar .logo{
+
+    color:#d4af37;
+
+    font-weight:700;
+
+    font-size:18px;
+
+    text-decoration:none;
+
+    white-space:nowrap;
+}
+
+
+/* =====================================================
+NAVIGATION
+===================================================== */
+
+.navbar ul{
+
+    display:flex;
+
+    gap:25px;
+
+    list-style:none;
+
+    align-items:center;
+}
+
+
+.navbar ul li a{
+
+    color:white;
+
+    text-decoration:none;
+
+    opacity:0.8;
+
+    transition:
+    0.3s ease;
+
+    display:block;
+}
+
+
+.navbar ul li a:hover{
+
+    opacity:1;
+
+    color:#d4af37;
+
+    transform:
+    translateY(-2px);
+}
+
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+
+@media(max-width:700px){
+
+    .navbar{
+
+        padding:
+        14px 5%;
+    }
+
+
+    .navbar ul{
+
+        gap:12px;
+    }
+
+
+    .navbar ul li a{
+
+        font-size:12px;
+    }
+
+
+    .navbar .logo{
+
+        font-size:17px;
+    }
+
+
+    .hero h1{
+
+        font-size:
+        clamp(
+            38px,
+            10vw,
+            64px
+        );
+    }
+
+
+    .hero p{
+
+        font-size:16px;
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .navbar{
+
+        padding:
+        13px 4%;
+    }
+
+
+    .navbar ul{
+
+        gap:8px;
+    }
+
+
+    .navbar ul li a{
+
+        font-size:11px;
+    }
+
+
+    .navbar .logo{
+
+        font-size:16px;
+    }
+
+}
+
+
+/* =====================================================
+MOBILE CURSOR
+===================================================== */
+
+@media(max-width:800px){
+
+    .cursor-glow{
+
+        display:none;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar" id="navbar">
+
+    <div class="logo">
+        Amani
+    </div>
+
+    <ul>
+
+             
+<li>
+            <a href="Connect.html">
+                 تواصل
+            </a>
+        </li>
+         <li>
+            <a href="exhibition.html">
+                بصماتي
+            </a>
+        </li>
+
+<li>
+            <a href="certificates.html">
+                الشهادات
+            </a>
+        </li>
+
+
+<li>
+            <a href="projects.html">
+                المشاريع
+            </a>
+        </li>
+        <li>
+            <a href="index.html">
+                الرئيسية
+            </a>
+        </li>
+    </ul>
+
+</nav>
+
+
+<div class="navbar-space"></div>
+
+
+<!-- =====================================================
+CURSOR
+===================================================== -->
+
+<div
+    class="cursor-glow"
+    id="glow"
+></div>
+
+
+<script>
+
+/* =====================================================
+CURSOR GLOW
+===================================================== */
+
+const glow =
+document.getElementById("glow");
+
+
+window.addEventListener(
+    "mousemove",
+    (e)=>{
+
+        glow.style.left =
+        e.clientX + "px";
+
+        glow.style.top =
+        e.clientY + "px";
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+THREE JS
+===================================================== -->
+
+<script>
+
+const scene =
+new THREE.Scene();
+
+
+const camera =
+new THREE.PerspectiveCamera(
+    75,
+    innerWidth/innerHeight,
+    0.1,
+    1000
+);
+
+
+const renderer =
+new THREE.WebGLRenderer({
+    alpha:true
+});
+
+
+renderer.setSize(
+    innerWidth,
+    innerHeight
+);
+
+
+document.body.appendChild(
+    renderer.domElement
+);
+
+
+const geo =
+new THREE.TorusKnotGeometry(
+    10,
+    3,
+    120,
+    16
+);
+
+
+const mat =
+new THREE.MeshBasicMaterial({
+    color:0xd4af37,
+    wireframe:true
+});
+
+
+const mesh =
+new THREE.Mesh(
+    geo,
+    mat
+);
+
+
+scene.add(mesh);
+
+
+camera.position.z=40;
+
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+    mesh.rotation.x += 0.002;
+
+    mesh.rotation.y += 0.003;
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
+
+
+/* =====================================================
+THREE JS RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        camera.aspect =
+        innerWidth/innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            innerWidth,
+            innerHeight
+        );
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+HERO
+===================================================== -->
+
+<section
+    class="section hero"
+    id="home"
+>
+
+    <h1>
+
+        Welcome to Amani World
+
+    </h1>
+
+
+    <p>
+
+        Apple-level cinematic portfolio experience
+
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+NAVBAR SCROLL CONTROL
+===================================================== -->
+
+<script>
+
+const navbar =
+document.getElementById("navbar");
+
+
+let lastScroll =
+window.scrollY;
+
+
+/*
+منع اختفاء الشريط بسبب
+حركة بسيطة جدًا
+*/
+
+const scrollThreshold = 10;
+
+
+window.addEventListener(
+    "scroll",
+    ()=>{
+
+        const currentScroll =
+        window.scrollY;
+
+
+        /*
+        إذا كنا في أعلى الصفحة
+        يبقى الشريط ظاهرًا
+        */
+
+        if(currentScroll <= 20){
+
+            navbar.classList.remove(
+                "nav-hidden"
+            );
+
+            lastScroll =
+            currentScroll;
+
+            return;
+
+        }
+
+
+        /*
+        النزول للأسفل
+        */
+
+        if(
+            currentScroll >
+            lastScroll + scrollThreshold
+        ){
+
+            navbar.classList.add(
+                "nav-hidden"
+            );
+
+        }
+
+
+        /*
+        الصعود للأعلى
+        */
+
+        else if(
+            currentScroll <
+            lastScroll - scrollThreshold
+        ){
+
+            navbar.classList.remove(
+                "nav-hidden"
+            );
+
+        }
+
+
+        lastScroll =
+        currentScroll;
+
+    },
+    {
+        passive:true
+    }
+);
+
+</script>
+
+
+</body>
+</html>
+<!-- ===== ABOUT ===== -->
+<section class="section glass about" id="about">
+
+  <div class="about-heading">
+    <h2>من أنا؟</h2>
+    <p>رحلتي في عالم التكنولوجيا والإبداع</p>
+  </div>
+
+  <div class="about-content">
+
+    <div class="about-text">
+
+      <h3>شغف يتحول إلى إنجازات</h3>
+
+      <p>
+        أنا طالبة في تخصص <strong>تكنولوجيا المعلومات</strong>،
+        شغوفة بالتكنولوجيا، وأحب التعلم والتجربة والابتكار.
+        أؤمن بأن التميز لا يأتي فقط من المعرفة، بل من القدرة على
+        تحويل الأفكار إلى أعمال ومشاريع حقيقية، وأسعى دائمًا إلى
+        تطوير نفسي واكتشاف مجالات جديدة أستطيع أن أبدع فيها.
+      </p>
+
+      <p>
+        أحب أن أتعلم أشياء جديدة وأحوّل أفكاري إلى مشاريع واقعية،
+        وأسعى دائمًا إلى أن أتميز وأترك بصمتي الخاصة في كل ما أقدمه.
+      </p>
+
+      
+      <p>
+        كما حصلت على <strong>شهادات حضور من مؤسسة ولي العهد</strong>
+        في مجال <strong>الذكاء الاصطناعي</strong>، مما زاد شغفي بهذا
+        المجال ودفعني إلى التعمق فيه وتطوير معرفتي بالتقنيات الحديثة.
+      </p>
+
+      <h3>رؤيتي</h3>
+
+      <p>
+        أطمح إلى إكمال مسيرتي في مجال <strong>الذكاء الاصطناعي</strong>،
+        والتعمق في التقنيات الحديثة، وبناء مشاريع تجمع بين البرمجة
+        والإبداع والذكاء، وتقديم أفكار وحلول تقنية لها قيمة وأثر حقيقي.
+      </p>
+
+      <h3>أهدافي</h3>
+
+      <p>
+        من أهم أهدافي أن أتعلم <strong dir="ltr">لغة Python</strong> بشكل متقدم،
+        وأن أتوسع في مجال الذكاء الاصطناعي وتطوير التطبيقات والمواقع،
+        وأن أطور <strong>موقع ويب احترافيًا يعرض جميع أعمالي ومشاريعي
+        وإنجازاتي</strong> في مكان واحد.
+      </p>
+
+      <p>
+        كما أطمح إلى المشاركة في المزيد من المعارض والبرامج والمسابقات
+        التقنية، وتطوير مشاريع أكثر احترافية، واكتساب خبرات جديدة تساعدني
+        على تحويل شغفي بالتكنولوجيا إلى إنجازات وابتكارات حقيقية.
+      </p>
+
+      <p class="about-quote">
+        <strong>أتعلم اليوم، أبتكر غدًا، وأبني مستقبلي بالتكنولوجيا.</strong>
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===== ABOUT CSS ===== -->
+
+<style> .about{ direction:rtl; text-align:right; } .about-heading{ position:relative; z-index:2; text-align:center; margin-bottom:30px; } .about-heading h2{ font-size:42px; margin-bottom:10px; color:#d4af37; } .about-heading p{ font-size:18px; color:rgba(255,255,255,0.72); } .about-content{ width:100%; position:relative; z-index:2; } .about-text{ width:100%; max-width:1100px; margin:auto; padding:10px 0 30px; background:transparent; border:0; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; } .about-text h3{ font-size:28px; color:#d4af37; margin:28px 0 16px; } .about-text h3:first-child{ margin-top:0; } .about-text p{ font-size:18px; line-height:2.15; color:#f1f1f1; margin-bottom:20px; text-align:left; direction:ltr; unicode-bidi:plaintext; } .about-text strong{ color:#d4af37; font-weight:700; } .about-quote{ text-align:left; margin-top:35px; padding:20px; border-top:1px solid rgba(212,175,55,0.3); border-bottom:1px solid rgba(212,175,55,0.3); } .about-text h3{ text-align:left; } .about-title{ text-align:left; } .about-title h2, .about-title p{ text-align:left; } @media(max-width:700px){ .about{ padding:100px 5%; } .about-heading h2{ font-size:34px; } .about-heading p{ font-size:15px; } .about-text{ padding:10px 0 25px; } .about-text h3{ font-size:23px; } .about-text p{ font-size:15px; line-height:2; } } </style>
+
+<!-- ===== GSAP ===== -->
+
+<script> gsap.registerPlugin(ScrollTrigger); gsap.utils.toArray(".section").forEach(sec=>{ gsap.to(sec,{ opacity:1, y:0, scale:1, duration:1.2, ease:"power4.out", scrollTrigger:{ trigger:sec, start:"top 85%", end:"top 40%", scrub:true } }); }); </script>
+
+</body> </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

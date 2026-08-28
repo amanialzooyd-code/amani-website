@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Amani | Apple Portfolio</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+
+<style>
+
+/* =====================================================
+RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Tahoma",
+    Arial,
+    sans-serif;
+
+    background:#000;
+
+    color:#fff;
+
+    overflow-x:hidden;
+
+    padding-top:70px;
+}
+
+
+/* =====================================================
+BACKGROUND THREE.JS
+===================================================== */
+
+canvas{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:-2;
+
+    opacity:0.20;
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+GLOBAL GOLD BACKGROUND
+===================================================== */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(
+        circle at 20% 20%,
+        rgba(212,175,55,0.08),
+        transparent 38%
+    ),
+
+    radial-gradient(
+        circle at 80% 70%,
+        rgba(255,255,255,0.04),
+        transparent 45%
+    );
+
+    z-index:-1;
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+CURSOR
+===================================================== */
+
+.cursor-glow{
+
+    position:fixed;
+
+    width:300px;
+    height:300px;
+
+    background:
+
+    radial-gradient(
+        circle,
+        rgba(212,175,55,0.16),
+        transparent 62%
+    );
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    transform:
+    translate(-50%,-50%);
+
+    z-index:10;
+
+    filter:blur(10px);
+}
+
+
+/* =====================================================
+SECTIONS
+===================================================== */
+
+.section{
+
+    min-height:100vh;
+
+    padding:120px 10%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    opacity:0;
+
+    transform:
+    translateY(80px)
+    scale(0.97);
+}
+
+
+/* =====================================================
+HERO
+===================================================== */
+
+.hero{
+
+    text-align:center;
+}
+
+
+.hero h1{
+
+    font-size:64px;
+
+    font-weight:700;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #fff,
+        #d4af37,
+        #fff
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+
+.hero p{
+
+    margin-top:20px;
+
+    opacity:0.7;
+
+    font-size:18px;
+}
+
+
+/* =====================================================
+ABOUT
+===================================================== */
+
+.about{
+
+    display:flex;
+
+    gap:40px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    url("image1.jpeg")
+    center/cover
+    no-repeat;
+
+    border-radius:25px;
+}
+
+
+.about::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    rgba(0,0,0,0.7);
+}
+
+
+.about > div{
+
+    position:relative;
+
+    z-index:2;
+}
+
+
+/* =====================================================
+GRID
+===================================================== */
+
+.grid{
+
+    display:grid;
+
+    gap:20px;
+}
+
+
+.grid-4{
+
+    grid-template-columns:
+    repeat(4,1fr);
+}
+
+
+/* =====================================================
+CARD
+===================================================== */
+
+.card{
+
+    height:180px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:18px;
+
+    transition:0.5s;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid
+    rgba(255,255,255,0.08);
+}
+
+
+.card:hover{
+
+    transform:
+    translateY(-10px)
+    scale(1.05);
+
+    background:
+    rgba(212,175,55,0.08);
+}
+
+
+/* =====================================================
+CERTIFICATES
+===================================================== */
+
+.cert-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:40px;
+
+    justify-items:center;
+
+    align-items:center;
+
+    max-width:1000px;
+
+    margin:auto;
+}
+
+
+.cert-card{
+
+    width:100%;
+
+    max-width:420px;
+
+    height:320px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    transition:0.5s;
+
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
+
+    background:
+    rgba(255,255,255,0.03);
+}
+
+
+.cert-card:hover{
+
+    transform:
+    scale(1.06);
+
+    box-shadow:
+    0 25px 60px
+    rgba(0,0,0,0.7);
+}
+
+
+.cert-card img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    padding:10px;
+}
+
+
+/* =====================================================
+VIDEO
+===================================================== */
+
+.video-box{
+
+    width:90%;
+
+    max-width:1000px;
+
+    height:550px;
+
+    margin:auto;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 20px 60px
+    rgba(0,0,0,0.6);
+
+    background:
+    rgba(255,255,255,0.05);
+}
+
+
+video{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+}
+
+
+/* =====================================================
+TEXT
+===================================================== */
+
+.glass-text{
+
+    padding:30px;
+
+    border-radius:25px;
+
+    line-height:2;
+
+    font-size:18px;
+
+    backdrop-filter:
+    blur(18px);
+
+    border:
+    1px solid
+    rgba(255,255,255,0.1);
+
+    background:
+    rgba(255,255,255,0.05);
+}
+
+
+/* =====================================================
+TITLES
+===================================================== */
+
+h2{
+
+    font-size:34px;
+
+    margin-bottom:20px;
+
+    color:#d4af37;
+}
+
+
+/* =====================================================
+NAVBAR — APPLE STYLE
+===================================================== */
+
+.navbar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:70px;
+
+    padding:0 7%;
+
+    display:flex;
+
+    flex-direction:row-reverse;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    z-index:9999;
+
+    background:
+    rgba(0,0,0,0.62);
+
+    backdrop-filter:
+    blur(22px);
+
+    -webkit-backdrop-filter:
+    blur(22px);
+
+    border-bottom:
+    1px solid
+    rgba(212,175,55,0.12);
+
+    transition:
+    transform 0.45s cubic-bezier(.4,0,.2,1),
+    opacity 0.35s ease;
+
+}
+
+
+/* =====================================================
+NAVBAR HIDDEN
+===================================================== */
+
+.navbar.nav-hidden{
+
+    transform:
+    translateY(-110%);
+
+    opacity:0;
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+LOGO — LEFT
+===================================================== */
+
+.navbar .logo{
+
+    order:1;
+
+    color:#d4af37;
+
+    font-weight:700;
+
+    font-size:19px;
+
+    text-decoration:none;
+
+    white-space:nowrap;
+
+    letter-spacing:0.5px;
+
+    text-shadow:
+    0 0 18px
+    rgba(212,175,55,0.20);
+
+    transition:
+    0.3s ease;
+}
+
+
+.navbar .logo:hover{
+
+    color:#f0d77a;
+
+    transform:
+    translateY(-1px);
+}
+
+
+/* =====================================================
+NAVIGATION — RIGHT
+===================================================== */
+
+.navbar ul{
+
+    order:2;
+
+    display:flex;
+
+    gap:28px;
+
+    list-style:none;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    margin:0;
+
+    padding:0;
+}
+
+
+.navbar ul li{
+
+    margin:0;
+
+    padding:0;
+}
+
+
+.navbar ul li a{
+
+    position:relative;
+
+    color:white;
+
+    text-decoration:none;
+
+    opacity:0.78;
+
+    transition:
+    color 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+
+    display:block;
+
+    padding:8px 2px;
+
+    font-size:14px;
+
+    white-space:nowrap;
+}
+
+
+.navbar ul li a::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:0;
+
+    bottom:0;
+
+    width:0;
+
+    height:1px;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        #d4af37
+    );
+
+    transition:
+    width 0.35s ease;
+}
+
+
+.navbar ul li a:hover{
+
+    opacity:1;
+
+    color:#d4af37;
+
+    transform:
+    translateY(-2px);
+}
+
+
+.navbar ul li a:hover::after{
+
+    width:100%;
+}
+
+
+/* =====================================================
+CONTACT PAGE
+===================================================== */
+
+.contact-page{
+
+    min-height:
+    calc(100vh - 70px);
+
+    width:100%;
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+    100px 20px;
+
+    isolation:isolate;
+
+}
+
+
+/* =====================================================
+FULL SCREEN IMAGE
+الصورة الحقيقية - تغطي كامل الشاشة
+===================================================== */
+
+.contact-background{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    object-position:center center;
+
+    display:block;
+
+    opacity:1;
+
+    z-index:-10;
+
+    pointer-events:none;
+
+}
+
+
+/* =====================================================
+IMAGE OVERLAY
+طبقة خفيفة جدًا فقط لتحسين وضوح النص
+===================================================== */
+
+.contact-overlay{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:
+
+    linear-gradient(
+        180deg,
+        rgba(0,0,0,0.18),
+        rgba(0,0,0,0.08) 45%,
+        rgba(0,0,0,0.30) 100%
+    );
+
+    z-index:-9;
+
+    pointer-events:none;
+
+}
+
+
+/* =====================================================
+GOLD LIGHT OVER IMAGE
+===================================================== */
+
+.contact-page .contact-light{
+
+    position:absolute;
+
+    width:700px;
+
+    height:700px;
+
+    top:-450px;
+
+    left:50%;
+
+    transform:
+    translateX(-50%);
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(212,175,55,0.13),
+        transparent 68%
+    );
+
+    filter:blur(25px);
+
+    pointer-events:none;
+
+    z-index:-7;
+}
+
+
+/* =====================================================
+CONTACT CONTAINER
+===================================================== */
+
+.contact-container{
+
+    position:relative;
+
+    z-index:5;
+
+    width:100%;
+
+    max-width:1050px;
+
+    text-align:center;
+
+}
+
+
+/* =====================================================
+CONTACT LABEL
+===================================================== */
+
+.contact-label{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:13px;
+
+    margin-bottom:24px;
+
+    color:#f0d77a;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:4px;
+
+    direction:ltr;
+
+    text-shadow:
+    0 2px 15px
+    rgba(0,0,0,0.8);
+}
+
+
+.contact-label::before,
+.contact-label::after{
+
+    content:"";
+
+    width:30px;
+
+    height:1px;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        #d4af37
+    );
+
+}
+
+
+.contact-label::after{
+
+    background:
+    linear-gradient(
+        90deg,
+        #d4af37,
+        transparent
+    );
+
+}
+
+
+/* =====================================================
+MAIN CONTACT TITLE
+===================================================== */
+
+.contact-title{
+
+    margin:0;
+
+    font-size:
+    clamp(
+        58px,
+        9vw,
+        110px
+    );
+
+    line-height:0.98;
+
+    letter-spacing:-6px;
+
+    font-weight:800;
+
+    color:#fff;
+
+    text-shadow:
+    0 15px 50px
+    rgba(0,0,0,0.75);
+
+}
+
+
+.contact-title span{
+
+    background:
+    linear-gradient(
+        135deg,
+        #fff2b5 0%,
+        #d4af37 45%,
+        #9b7622 100%
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+}
+
+
+/* =====================================================
+DESCRIPTION
+===================================================== */
+
+.contact-description{
+
+    max-width:680px;
+
+    margin:30px auto 0;
+
+    color:
+    rgba(255,255,255,0.86);
+
+    font-size:16px;
+
+    line-height:2;
+
+    text-shadow:
+    0 4px 20px
+    rgba(0,0,0,0.85);
+
+}
+
+
+/* =====================================================
+MAIN GLASS CARD
+===================================================== */
+
+.contact-card{
+
+    position:relative;
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:55px auto 0;
+
+    padding:55px;
+
+    text-align:right;
+
+    border-radius:35px;
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(10,10,10,0.66),
+        rgba(10,10,10,0.38)
+    );
+
+    border:
+    1px solid
+    rgba(212,175,55,0.34);
+
+    box-shadow:
+
+    0 40px 110px
+    rgba(0,0,0,0.65),
+
+    inset 0 1px 0
+    rgba(255,255,255,0.14),
+
+    inset 0 0 80px
+    rgba(212,175,55,0.025);
+
+    backdrop-filter:
+    blur(20px);
+
+    -webkit-backdrop-filter:
+    blur(20px);
+
+    transition:
+    transform 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+
+}
+
+
+.contact-card:hover{
+
+    transform:
+    translateY(-5px);
+
+    border-color:
+    rgba(212,175,55,0.50);
+
+    box-shadow:
+
+    0 55px 130px
+    rgba(0,0,0,0.75),
+
+    inset 0 1px 0
+    rgba(255,255,255,0.15),
+
+    0 0 50px
+    rgba(212,175,55,0.035);
+
+}
+
+
+/* =====================================================
+CARD TOP GOLD LINE
+===================================================== */
+
+.contact-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    right:12%;
+
+    width:76%;
+
+    height:1px;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(230,195,92,0.85),
+        transparent
+    );
+
+}
+
+
+/* =====================================================
+CARD HEADER
+===================================================== */
+
+.card-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:35px;
+
+}
+
+
+.card-icon{
+
+    width:50px;
+
+    height:50px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:16px;
+
+    color:#e2c46b;
+
+    font-size:21px;
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(212,175,55,0.20),
+        rgba(212,175,55,0.035)
+    );
+
+    border:
+    1px solid
+    rgba(212,175,55,0.25);
+
+    box-shadow:
+    0 10px 30px
+    rgba(0,0,0,0.25);
+
+}
+
+
+/* =====================================================
+CARD LABEL
+===================================================== */
+
+.card-label{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+
+}
+
+
+.card-label span{
+
+    color:#d6b85c;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    direction:ltr;
+
+}
+
+
+.card-label strong{
+
+    font-size:15px;
+
+    color:
+    rgba(255,255,255,0.90);
+
+}
+
+
+/* =====================================================
+CARD TITLE
+===================================================== */
+
+.card-title{
+
+    font-size:
+    clamp(
+        40px,
+        5vw,
+        68px
+    );
+
+    line-height:1.05;
+
+    letter-spacing:-3px;
+
+    font-weight:800;
+
+    color:#fff;
+
+}
+
+
+.card-title span{
+
+    color:
+    rgba(255,255,255,0.52);
+
+}
+
+
+/* =====================================================
+CARD DESCRIPTION
+===================================================== */
+
+.card-text{
+
+    max-width:650px;
+
+    margin:25px 0 42px;
+
+    color:
+    rgba(255,255,255,0.68);
+
+    font-size:14px;
+
+    line-height:2;
+
+}
+
+
+/* =====================================================
+CONTACT LINKS
+===================================================== */
+
+.contact-links{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:16px;
+
+}
+
+
+/* =====================================================
+PROFESSIONAL CONTACT BUTTON
+===================================================== */
+
+.contact-link{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    min-height:94px;
+
+    padding:17px 18px;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    overflow:hidden;
+
+    border-radius:22px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,0.075),
+        rgba(255,255,255,0.025)
+    );
+
+    border:
+    1px solid
+    rgba(255,255,255,0.12);
+
+    box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,0.06);
+
+    transition:
+    transform 0.4s cubic-bezier(.2,.8,.2,1),
+    background 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+
+}
+
+
+/* =====================================================
+BUTTON LIGHT
+===================================================== */
+
+.contact-link::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:170px;
+
+    height:170px;
+
+    top:-100px;
+
+    right:-60px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(212,175,55,0.15),
+        transparent 68%
+    );
+
+    opacity:0;
+
+    transition:
+    opacity 0.4s ease;
+
+}
+
+
+/* =====================================================
+BUTTON HOVER
+===================================================== */
+
+.contact-link:hover{
+
+    transform:
+    translateY(-6px);
+
+    background:
+
+    linear-gradient(
+        135deg,
+        rgba(212,175,55,0.13),
+        rgba(255,255,255,0.045)
+    );
+
+    border-color:
+    rgba(212,175,55,0.42);
+
+    box-shadow:
+
+    0 18px 45px
+    rgba(0,0,0,0.35),
+
+    inset 0 1px 0
+    rgba(255,255,255,0.10);
+}
+
+
+.contact-link:hover::before{
+
+    opacity:1;
+
+}
+
+
+/* =====================================================
+LINK ICON
+===================================================== */
+
+.link-icon{
+
+    position:relative;
+
+    z-index:2;
+
+    width:52px;
+
+    height:52px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:16px;
+
+    color:#e0c16a;
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(212,175,55,0.18),
+        rgba(212,175,55,0.035)
+    );
+
+    border:
+    1px solid
+    rgba(212,175,55,0.22);
+
+    box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,0.07);
+
+    transition:
+    transform 0.4s ease,
+    background 0.4s ease;
+}
+
+
+.contact-link:hover .link-icon{
+
+    transform:
+    scale(1.06);
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(212,175,55,0.25),
+        rgba(212,175,55,0.06)
+    );
+
+}
+
+
+/* =====================================================
+EMAIL ICON
+===================================================== */
+
+.email-icon{
+
+    font-family:Arial,sans-serif;
+
+    font-size:21px;
+
+    font-weight:500;
+
+}
+
+
+/* =====================================================
+LINKEDIN ICON
+===================================================== */
+
+.linkedin-icon{
+
+    font-family:Arial,sans-serif;
+
+    font-size:18px;
+
+    font-weight:800;
+
+}
+
+
+/* =====================================================
+LINK TEXT
+===================================================== */
+
+.link-text{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    min-width:0;
+
+    flex:1;
+
+}
+
+
+.link-label{
+
+    margin-bottom:6px;
+
+    color:#c09c42;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    direction:ltr;
+
+}
+
+
+.link-value{
+
+    color:
+    rgba(255,255,255,0.95);
+
+    font-size:13px;
+
+    font-weight:600;
+
+    overflow-wrap:anywhere;
+}
+
+
+/* =====================================================
+ARROW
+===================================================== */
+
+.link-arrow{
+
+    position:relative;
+
+    z-index:2;
+
+    width:37px;
+
+    height:37px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    color:
+    rgba(212,175,55,0.70);
+
+    border:
+    1px solid
+    rgba(212,175,55,0.14);
+
+    font-size:18px;
+
+    transition:
+    color 0.35s ease,
+    background 0.35s ease,
+    transform 0.35s ease;
+
+}
+
+
+.contact-link:hover .link-arrow{
+
+    color:#f0d77a;
+
+    background:
+    rgba(212,175,55,0.12);
+
+    transform:
+    translate(-4px,4px);
+
+}
+
+
+/* =====================================================
+FOOTER
+===================================================== */
+
+.contact-footer{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:13px;
+
+    margin-top:55px;
+
+    padding-top:24px;
+
+    border-top:
+    1px solid
+    rgba(212,175,55,0.13);
+
+    color:
+    rgba(255,255,255,0.50);
+
+    font-size:10px;
+
+}
+
+
+.footer-star{
+
+    color:#c9a44c;
+
+}
+
+
+/* =====================================================
+MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+    .navbar{
+
+        height:65px;
+
+        padding:
+        0 5%;
+
+        flex-direction:row-reverse;
+
+    }
+
+
+    .navbar ul{
+
+        gap:13px;
+
+    }
+
+
+    .navbar ul li a{
+
+        font-size:12px;
+
+        padding:6px 1px;
+
+    }
+
+
+    .navbar .logo{
+
+        font-size:17px;
+
+    }
+
+
+    .contact-page{
+
+        min-height:
+        calc(100vh - 65px);
+
+        padding:
+        75px 15px 40px;
+
+    }
+
+
+    .contact-background{
+
+        width:100%;
+
+        height:100%;
+
+        object-fit:cover;
+
+        object-position:center center;
+
+    }
+
+
+    .contact-title{
+
+        font-size:
+        clamp(
+            48px,
+            14vw,
+            70px
+        );
+
+        letter-spacing:-3px;
+
+    }
+
+
+    .contact-description{
+
+        font-size:14px;
+
+        line-height:1.9;
+
+    }
+
+
+    .contact-card{
+
+        margin-top:45px;
+
+        padding:30px 20px;
+
+        border-radius:26px;
+
+    }
+
+
+    .card-title{
+
+        font-size:40px;
+
+        letter-spacing:-2px;
+
+    }
+
+
+    .card-text{
+
+        font-size:13px;
+
+        margin-bottom:30px;
+
+    }
+
+
+    .contact-links{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .contact-link{
+
+        min-height:84px;
+
+        border-radius:19px;
+
+    }
+
+
+    .link-value{
+
+        font-size:11.5px;
+
+    }
+
+
+    .contact-footer{
+
+        flex-direction:column;
+
+        gap:8px;
+
+        margin-top:45px;
+
+    }
+
+}
+
+
+/* =====================================================
+SMALL MOBILE
+===================================================== */
+
+@media(max-width:500px){
+
+    .navbar{
+
+        height:62px;
+
+        padding:
+        0 4%;
+
+    }
+
+
+    .navbar ul{
+
+        gap:8px;
+
+    }
+
+
+    .navbar ul li a{
+
+        font-size:10.5px;
+
+    }
+
+
+    .navbar .logo{
+
+        font-size:16px;
+
+    }
+
+
+    .contact-page{
+
+        padding-left:12px;
+
+        padding-right:12px;
+
+    }
+
+}
+
+
+/* =====================================================
+MOBILE CURSOR
+===================================================== */
+
+@media(max-width:800px){
+
+    .cursor-glow{
+
+        display:none;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+NAVBAR
+===================================================== -->
+
+<nav class="navbar" id="navbar">
+
+    <!-- الروابط في اليمين -->
+
+    <ul>
+
+        <li>
+            <a href="index.html">
+                الرئيسية
+            </a>
+        </li>
+
+
+        <li>
+            <a href="projects.html">
+                المشاريع
+            </a>
+        </li>
+
+
+        <li>
+            <a href="certificates.html">
+                الشهادات
+            </a>
+        </li>
+
+
+        <li>
+            <a href="exhibition.html">
+                بصماتي
+            </a>
+        </li>
+
+
+        <li>
+            <a href="Connect.html">
+                تواصل
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- الشعار في اليسار -->
+
+    <a href="home.html" class="logo">
+        Amani
+    </a>
+
+</nav>
+
+
+<!-- =====================================================
+CURSOR
+===================================================== -->
+
+<div
+    class="cursor-glow"
+    id="glow"
+></div>
+
+
+<!-- =====================================================
+THREE JS
+===================================================== -->
+
+<script>
+
+const scene =
+new THREE.Scene();
+
+
+const camera =
+new THREE.PerspectiveCamera(
+    75,
+    innerWidth/innerHeight,
+    0.1,
+    1000
+);
+
+
+const renderer =
+new THREE.WebGLRenderer({
+
+    alpha:true,
+
+    antialias:true
+
+});
+
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
+);
+
+
+renderer.setSize(
+    innerWidth,
+    innerHeight
+);
+
+
+document.body.appendChild(
+    renderer.domElement
+);
+
+
+const geo =
+new THREE.TorusKnotGeometry(
+    10,
+    3,
+    120,
+    16
+);
+
+
+const mat =
+new THREE.MeshBasicMaterial({
+
+    color:0xd4af37,
+
+    wireframe:true,
+
+    transparent:true,
+
+    opacity:0.16
+
+});
+
+
+const mesh =
+new THREE.Mesh(
+    geo,
+    mat
+);
+
+
+scene.add(mesh);
+
+
+camera.position.z=40;
+
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+    mesh.rotation.x += 0.002;
+
+    mesh.rotation.y += 0.003;
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
+
+
+/* =====================================================
+THREE JS RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        camera.aspect =
+        innerWidth/innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            innerWidth,
+            innerHeight
+        );
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+CURSOR GLOW SCRIPT
+===================================================== -->
+
+<script>
+
+const glow =
+document.getElementById("glow");
+
+
+window.addEventListener(
+    "mousemove",
+    (e)=>{
+
+        glow.style.left =
+        e.clientX + "px";
+
+        glow.style.top =
+        e.clientY + "px";
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+CONTACT PAGE
+===================================================== -->
+
+<main class="contact-page">
+
+
+    <!-- =================================================
+         الصورة الحقيقية كاملة الشاشة
+    ================================================== -->
+
+    <img
+        src="image1.jpeg"
+        class="contact-background"
+        alt="Amani Background"
+    >
+
+
+    <!-- =================================================
+         طبقة خفيفة فوق الصورة
+    ================================================== -->
+
+    <div class="contact-overlay"></div>
+
+
+    <!-- إضاءة ذهبية -->
+
+    <div class="contact-light"></div>
+
+
+    <div class="contact-container">
+
+
+        <!-- =================================================
+             LABEL
+        ================================================== -->
+
+        <div class="contact-label">
+
+            LET'S CONNECT
+
+        </div>
+
+
+        <!-- =================================================
+             MAIN TITLE
+        ================================================== -->
+
+        <h1 class="contact-title">
+
+            تواصل
+            <span>معي.</span>
+
+        </h1>
+
+
+        <!-- =================================================
+             DESCRIPTION
+        ================================================== -->
+
+        <p class="contact-description">
+
+            كل فكرة مميزة تبدأ بتواصل بسيط.
+            <br>
+
+            إذا كان لديك مشروع، فكرة، أو فرصة للتعاون،
+            يسعدني أن أسمع منك.
+
+        </p>
+
+
+        <!-- =================================================
+             MAIN CARD
+        ================================================== -->
+
+        <div class="contact-card">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="card-header">
+
+                <div class="card-icon">
+                    ✦
+                </div>
+
+
+                <div class="card-label">
+
+                    <span>
+                        GET IN TOUCH
+                    </span>
+
+                    <strong>
+                        لنصنع شيئًا مميزًا
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD TITLE -->
+
+            <h2 class="card-title">
+
+                لديك فكرة؟
+                <br>
+
+                <span>
+                    دعنا نبدأ.
+                </span>
+
+            </h2>
+
+
+            <!-- CARD DESCRIPTION -->
+
+            <p class="card-text">
+
+                للتواصل والاستفسارات والمشاريع الإبداعية،
+                يمكنك الوصول إليّ مباشرة عبر البريد الإلكتروني
+                أو حسابي على LinkedIn.
+
+            </p>
+
+
+            <!-- =================================================
+                 CONTACT LINKS
+            ================================================== -->
+
+            <div class="contact-links">
+
+
+                <!-- EMAIL -->
+
+                <a
+                    href="mailto:amanialzooyd@gmail.com"
+                    class="contact-link"
+                >
+
+                    <div class="link-icon email-icon">
+                        @
+                    </div>
+
+
+                    <div class="link-text">
+
+                        <span class="link-label">
+                            EMAIL
+                        </span>
+
+                        <span class="link-value">
+                            amanialzooyd@gmail.com
+                        </span>
+
+                    </div>
+
+
+                    <div class="link-arrow">
+                        ↗
+                    </div>
+
+                </a>
+
+
+                <!-- LINKEDIN -->
+
+                <a
+                    href="https://www.linkedin.com/in/amani-al-abdullah-984070390?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-link"
+                >
+
+                    <div class="link-icon linkedin-icon">
+                        in
+                    </div>
+
+
+                    <div class="link-text">
+
+                        <span class="link-label">
+                            LINKEDIN
+                        </span>
+
+                        <span class="link-value">
+                            Amani Al-Abdullah
+                        </span>
+
+                    </div>
+
+
+                    <div class="link-arrow">
+                        ↗
+                    </div>
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="contact-footer">
+
+            <span>
+                © 2026 Amani Al-Abdullah
+            </span>
+
+            <span class="footer-star">
+                ✦
+            </span>
+
+            <span>
+                Crafted with passion
+            </span>
+
+        </footer>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

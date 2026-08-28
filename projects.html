@@ -1,0 +1,3955 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amani | Apple Portfolio</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+
+/* ===== RESET ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:black;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* =====================================================
+   PROJECTS HERO - صورة البداية
+===================================================== */
+
+.projects-hero{
+  position:relative;
+
+  width:100%;
+  height:100vh;
+  min-height:650px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  overflow:hidden;
+
+  background:
+    url("projects-hero.jpg")
+    center center /
+    cover no-repeat;
+}
+
+/* طبقة تعتيم فوق الصورة */
+.projects-hero::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.25),
+      rgba(0,0,0,.45),
+      rgba(0,0,0,.80)
+    );
+
+  z-index:1;
+}
+
+/* تأثير إضاءة ذهبي */
+.projects-hero::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(212,175,55,.16),
+      transparent 45%
+    );
+
+  z-index:2;
+
+  pointer-events:none;
+}
+
+/* محتوى صورة البداية */
+.projects-hero-content{
+  position:relative;
+
+  z-index:4;
+
+  padding:30px;
+
+  animation:
+    heroAppear 1.5s
+    cubic-bezier(.16,1,.3,1)
+    forwards;
+}
+
+.projects-hero-content h1{
+
+  font-size:
+    clamp(55px,9vw,125px);
+
+  font-weight:800;
+
+  letter-spacing:4px;
+
+  margin-bottom:20px;
+
+  color:white;
+
+  text-shadow:
+    0 5px 25px rgba(0,0,0,1),
+    0 0 50px rgba(0,0,0,.8);
+}
+
+.projects-hero-content h1 span{
+
+  background:
+    linear-gradient(
+      90deg,
+      #fff,
+      #d4af37,
+      #fff
+    );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  background-size:200% auto;
+
+  animation:
+    goldMove 4s
+    linear infinite;
+}
+
+.projects-hero-content p{
+
+  font-size:
+    clamp(16px,2vw,24px);
+
+  color:
+    rgba(255,255,255,.9);
+
+  letter-spacing:2px;
+
+  text-shadow:
+    0 3px 15px rgba(0,0,0,1);
+}
+
+/* خط ذهبي */
+.hero-line{
+
+  width:120px;
+  height:2px;
+
+  margin:28px auto;
+
+  background:#d4af37;
+
+  box-shadow:
+    0 0 20px rgba(212,175,55,.7);
+}
+
+/* سهم النزول */
+.scroll-indicator{
+
+  position:absolute;
+
+  bottom:35px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  z-index:5;
+
+  color:white;
+
+  font-size:14px;
+
+  opacity:.10;
+
+  letter-spacing:2px;
+}
+
+.scroll-arrow{
+
+  display:block;
+
+  margin-top:10px;
+
+  font-size:28px;
+
+  color:#d4af37;
+
+  animation:
+    scrollArrow 1.6s
+    infinite;
+}
+
+@keyframes heroAppear{
+
+  from{
+    opacity:0;
+    transform:
+      translateY(50px)
+      scale(.94);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes goldMove{
+
+  0%{
+    background-position:0% center;
+  }
+
+  50%{
+    background-position:100% center;
+  }
+
+  100%{
+    background-position:0% center;
+  }
+}
+
+@keyframes scrollArrow{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(10px);
+  }
+}
+
+/* ===== BACKGROUND ===== */
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-3;
+  opacity:0.8;
+}
+
+body::before{
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(212,175,55,0.10),
+      transparent 40%
+    ),
+
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(255,255,255,0.06),
+      transparent 50%
+    );
+
+  z-index:-2;
+}
+
+/* ===== CURSOR GLOW ===== */
+
+.cursor-glow{
+
+  position:fixed;
+
+  width:300px;
+  height:300px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(212,175,55,0.18),
+      transparent 60%
+    );
+
+  border-radius:50%;
+
+  pointer-events:none;
+
+  transform:
+    translate(-50%,-50%);
+
+  z-index:-1;
+}
+
+/* ===== SECTIONS ===== */
+
+.section{
+
+  min-height:100vh;
+
+  padding:120px 8%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  opacity:0;
+
+  transform:
+    translateY(80px)
+    scale(0.97);
+
+  max-width:1200px;
+
+  margin:auto;
+}
+
+/* ===== TITLES ===== */
+
+h2{
+
+  font-size:38px;
+
+  margin-bottom:25px;
+
+  color:#d4af37;
+
+  letter-spacing:1px;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+
+  text-align:center;
+}
+
+.hero h1{
+
+  font-size:70px;
+
+  font-weight:800;
+
+  background:
+    linear-gradient(
+      90deg,
+      #fff,
+      #d4af37,
+      #fff
+    );
+
+  -webkit-background-clip:text;
+
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+
+  margin-top:20px;
+
+  opacity:0.75;
+
+  font-size:18px;
+}
+
+/* ===== GLASS ===== */
+
+.glass{
+
+  background:
+    rgba(255,255,255,0.05);
+
+  backdrop-filter:blur(20px);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.1);
+
+  border-radius:25px;
+}
+
+/* ===== ABOUT ===== */
+
+.about{
+
+  display:flex;
+
+  gap:40px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+    url("image1.jpeg")
+    center/cover
+    no-repeat;
+
+  border-radius:25px;
+
+  padding:30px;
+}
+
+.about::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    rgba(0,0,0,0.75);
+}
+
+.about > div{
+
+  position:relative;
+
+  z-index:2;
+}
+
+/* ===== GRID ===== */
+
+.grid{
+
+  display:grid;
+
+  gap:20px;
+}
+
+.grid-4{
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(200px,1fr)
+    );
+}
+
+/* ===== CARD ===== */
+
+.card{
+
+  height:180px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:18px;
+
+  transition:
+    0.4s ease;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  cursor:pointer;
+}
+
+.card:hover{
+
+  transform:
+    translateY(-12px)
+    scale(1.05);
+
+  background:
+    rgba(212,175,55,0.10);
+}
+
+/* ===== CERTIFICATES ===== */
+
+.cert-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(280px,1fr)
+    );
+
+  gap:40px;
+
+  justify-items:center;
+
+  align-items:center;
+
+  max-width:1000px;
+
+  margin:auto;
+}
+
+.cert-card{
+
+  width:100%;
+
+  max-width:420px;
+
+  height:320px;
+
+  border-radius:25px;
+
+  overflow:hidden;
+
+  transition:0.5s;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.15);
+
+  background:
+    rgba(255,255,255,0.03);
+}
+
+.cert-card:hover{
+
+  transform:scale(1.07);
+
+  box-shadow:
+    0 25px 60px
+    rgba(0,0,0,0.7);
+}
+
+.cert-card img{
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:contain;
+
+  padding:10px;
+}
+
+/* ===== VIDEO ===== */
+
+.video-box{
+
+  width:100%;
+
+  max-width:1000px;
+
+  height:550px;
+
+  margin:auto;
+
+  border-radius:25px;
+
+  overflow:hidden;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0,0,0,0.6);
+
+  background:
+    rgba(255,255,255,0.05);
+}
+
+video{
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:cover;
+}
+
+/* phone mock video */
+
+.phone-box{
+
+  width:300px;
+
+  height:620px;
+
+  border-radius:38px;
+
+  padding:10px;
+
+  margin:auto;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1a1a1a,
+      #0a0a0a
+    );
+}
+
+/* ===== TEXT GLASS ===== */
+
+.glass-text{
+
+  padding:30px;
+
+  border-radius:25px;
+
+  line-height:2;
+
+  font-size:18px;
+
+  backdrop-filter:blur(20px);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.1);
+
+  background:
+    rgba(255,255,255,0.05);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+  .projects-hero{
+    min-height:600px;
+  }
+
+  .projects-hero-content h1{
+    font-size:52px;
+    letter-spacing:2px;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .section{
+    padding:90px 6%;
+  }
+
+  .video-box{
+    height:300px;
+  }
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar{
+
+  position:fixed;
+
+  top:0;
+  left:0;
+
+  width:100%;
+
+  padding:15px 8%;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  z-index:999;
+
+  background:
+    rgba(0,0,0,0.4);
+
+  backdrop-filter:blur(15px);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,0.08);
+}
+
+.navbar .logo{
+
+  font-size:20px;
+
+  font-weight:700;
+
+  color:#d4af37;
+
+  letter-spacing:1px;
+}
+
+.navbar ul{
+
+  list-style:none;
+
+  display:flex;
+
+  gap:25px;
+}
+
+.navbar ul li a{
+
+  text-decoration:none;
+
+  color:white;
+
+  font-size:15px;
+
+  opacity:0.8;
+
+  transition:0.3s;
+}
+
+.navbar ul li a:hover{
+
+  opacity:1;
+
+  color:#d4af37;
+
+  transform:
+    translateY(-2px);
+}
+
+/* حتى ما يغطي الـ navbar المحتوى */
+
+body{
+
+  padding-top:0;
+}
+
+
+/* =====================================================
+   MOBILE NAVBAR
+===================================================== */
+
+@media(max-width:600px){
+
+  .navbar{
+
+    padding:
+      13px 4%;
+  }
+
+  .navbar .logo{
+
+    font-size:17px;
+  }
+
+  .navbar ul{
+
+    gap:10px;
+  }
+
+  .navbar ul li a{
+
+    font-size:10px;
+  }
+
+  .projects-hero-content h1{
+
+    font-size:43px;
+
+    line-height:1.3;
+  }
+
+  .projects-hero-content p{
+
+    font-size:14px;
+
+    letter-spacing:1px;
+  }
+
+  .hero-line{
+
+    width:80px;
+
+    margin:20px auto;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:420px){
+
+  .navbar{
+
+    padding:
+      12px 3%;
+  }
+
+  .navbar ul{
+
+    gap:7px;
+  }
+
+  .navbar ul li a{
+
+    font-size:9px;
+  }
+
+  .navbar .logo{
+
+    font-size:15px;
+  }
+
+  .projects-hero-content h1{
+
+    font-size:38px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+  <div class="logo">
+    Amani
+  </div>
+
+  <ul>
+
+    
+
+       
+
+        
+
+       
+<li>
+            <a href="Connect.html">
+                 تواصل
+            </a>
+        </li>
+        <li>
+            <a href="exhibition.html">
+                بصماتي
+            </a>
+        </li>
+
+<li>
+            <a href="certificates.html">
+                الشهادات
+            </a>
+        </li>
+
+
+<li>
+            <a href="projects.html">
+                المشاريع
+            </a>
+        </li>
+        <li>
+            <a href="index.html">
+                الرئيسية
+            </a>
+        </li>
+    </ul>
+
+  </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     صورة البداية - المشاريع
+===================================================== -->
+
+<section class="projects-hero">
+
+  <div class="projects-hero-content">
+
+    <h1>
+      <span>مشاريعي</span>
+    </h1>
+
+    <div class="hero-line"></div>
+
+    <p>
+      مجموعة من أعمالي ومشاريعي الإبداعية والتقنية
+    </p>
+
+  </div>
+
+  <div class="scroll-indicator">
+
+    استكشف مشاريعي
+
+    <span class="scroll-arrow">
+      ↓
+    </span>
+
+  </div>
+
+</section>
+
+
+<div class="cursor-glow" id="glow"></div>
+
+
+<script>
+
+const glow =
+document.getElementById("glow");
+
+window.addEventListener(
+  "mousemove",
+  (e)=>{
+
+    glow.style.left =
+      e.clientX + "px";
+
+    glow.style.top =
+      e.clientY + "px";
+
+  }
+);
+
+</script>
+
+
+<!-- =====================================================
+     THREE.JS
+===================================================== -->
+
+<script>
+
+const scene =
+new THREE.Scene();
+
+const camera =
+new THREE.PerspectiveCamera(
+  75,
+  innerWidth/innerHeight,
+  0.1,
+  1000
+);
+
+const renderer =
+new THREE.WebGLRenderer({
+  alpha:true
+});
+
+renderer.setSize(
+  innerWidth,
+  innerHeight
+);
+
+document.body.appendChild(
+  renderer.domElement
+);
+
+const geo =
+new THREE.TorusKnotGeometry(
+  10,
+  3,
+  120,
+  16
+);
+
+const mat =
+new THREE.MeshBasicMaterial({
+  color:0xd4af37,
+  wireframe:true
+});
+
+const mesh =
+new THREE.Mesh(
+  geo,
+  mat
+);
+
+scene.add(mesh);
+
+camera.position.z = 40;
+
+function animate(){
+
+  requestAnimationFrame(
+    animate
+  );
+
+  mesh.rotation.x += 0.002;
+
+  mesh.rotation.y += 0.003;
+
+  renderer.render(
+    scene,
+    camera
+  );
+
+}
+
+animate();
+
+</script>
+
+
+<!-- =====================================================
+     GAME PROJECT — APPLE STYLE
+===================================================== -->
+
+<style>
+
+/* ================= GAME PROJECT ================= */
+
+.game-project{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+
+    padding:140px 6% 160px;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(212,175,55,.14),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(100,120,255,.10),
+            transparent 35%
+        ),
+        #030303;
+}
+
+
+/* ===== إضاءة خلفية ===== */
+
+.game-project::before{
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    top:-250px;
+    right:-200px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212,175,55,.13),
+            transparent 70%
+        );
+
+    filter:blur(30px);
+
+    pointer-events:none;
+}
+
+
+.game-project::after{
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    bottom:-250px;
+    left:-180px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(80,100,255,.10),
+            transparent 70%
+        );
+
+    filter:blur(30px);
+
+    pointer-events:none;
+}
+
+
+/* ================= HEADER ================= */
+
+.game-header{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:1200px;
+
+    margin:0 auto 70px;
+
+    text-align:center;
+}
+
+
+.game-label{
+
+    display:inline-block;
+
+    margin-bottom:22px;
+
+    padding:9px 20px;
+
+    border-radius:50px;
+
+    color:#FFD700;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    background:
+        rgba(212,175,55,.08);
+
+    border:
+        1px solid
+        rgba(212,175,55,.35);
+
+    box-shadow:
+        0 0 30px
+        rgba(212,175,55,.08);
+
+    backdrop-filter:blur(10px);
+}
+
+
+.game-header h2{
+
+    margin:0;
+
+    font-size:
+        clamp(
+            45px,
+            7vw,
+            90px
+        );
+
+    font-weight:800;
+
+    line-height:1.05;
+
+    background:
+        linear-gradient(
+            110deg,
+            #ffffff 10%,
+            #FFD700 45%,
+            #ffffff 70%,
+            #d4af37 100%
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    background-size:200% auto;
+
+    animation:
+        goldMove 5s linear infinite;
+
+    text-shadow:
+        0 15px 50px
+        rgba(212,175,55,.15);
+}
+
+
+@keyframes goldMove{
+
+    0%{
+        background-position:0% center;
+    }
+
+    100%{
+        background-position:200% center;
+    }
+
+}
+
+
+/* ================= DESCRIPTION CARD ================= */
+
+.game-card{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    padding:55px 65px;
+
+    border-radius:35px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    backdrop-filter:blur(25px);
+
+    -webkit-backdrop-filter:blur(25px);
+
+    box-shadow:
+
+        0 30px 100px
+        rgba(0,0,0,.65),
+
+        inset 0 1px 0
+        rgba(255,255,255,.10);
+
+    overflow:hidden;
+
+    transition:
+        transform .5s ease,
+        box-shadow .5s ease;
+}
+
+
+.game-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #FFD700,
+            white,
+            #FFD700,
+            transparent
+        );
+
+    opacity:.8;
+}
+
+
+.game-card:hover{
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+
+        0 40px 120px
+        rgba(0,0,0,.8),
+
+        0 0 50px
+        rgba(212,175,55,.08);
+}
+
+
+/* ================= TEXT ================= */
+
+.game-card-content{
+
+    direction:rtl;
+
+    text-align:right;
+
+}
+
+
+.game-intro{
+
+    font-size:22px;
+
+    line-height:2;
+
+    color:#fff;
+
+    margin-bottom:35px;
+
+    font-weight:500;
+}
+
+
+.game-intro strong{
+
+    color:#FFD700;
+
+    font-weight:700;
+}
+
+
+.game-story{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:22px;
+
+    margin-top:30px;
+}
+
+
+/* ================= STORY ITEMS ================= */
+
+.story-item{
+
+    position:relative;
+
+    padding:25px;
+
+    border-radius:22px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    transition:.4s ease;
+}
+
+
+.story-item:hover{
+
+    transform:translateY(-5px);
+
+    background:
+        rgba(212,175,55,.07);
+
+    border-color:
+        rgba(212,175,55,.35);
+
+}
+
+
+.story-icon{
+
+    font-size:28px;
+
+    margin-bottom:12px;
+
+    display:block;
+}
+
+
+.story-item h3{
+
+    color:#FFD700;
+
+    font-size:18px;
+
+    margin-bottom:10px;
+}
+
+
+.story-item p{
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:15px;
+
+    line-height:2;
+
+    margin:0;
+}
+
+
+/* ================= FINAL TEXT ================= */
+
+.game-final{
+
+    margin-top:38px;
+
+    padding-top:30px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+    font-size:17px;
+
+    line-height:2.2;
+
+    color:
+        rgba(255,255,255,.82);
+}
+
+
+.game-final strong{
+
+    color:#FFD700;
+}
+
+
+/* ================= VIDEO SPACE ================= */
+
+.game-video-space{
+
+    height:110px;
+}
+
+
+/* ================= VIDEO TITLE ================= */
+
+.game-video-title{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    margin-bottom:35px;
+}
+
+
+.game-video-title span{
+
+    display:block;
+
+    color:
+        rgba(255,255,255,.55);
+
+    font-size:13px;
+
+    letter-spacing:3px;
+
+    margin-bottom:12px;
+
+    text-transform:uppercase;
+}
+
+
+.game-video-title h3{
+
+    color:white;
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            48px
+        );
+
+    margin:0;
+
+    font-weight:700;
+}
+
+
+.game-video-title h3 b{
+
+    color:#FFD700;
+}
+
+
+/* ================= CINEMATIC VIDEO ================= */
+.game-video{
+    position:relative;
+    z-index:2;
+
+    width:80%;
+    max-width:1000px;
+
+    height:500px;
+    min-height:0;
+
+    margin:0 auto;
+
+    border-radius:30px;
+    overflow:hidden;
+
+    background:#000;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.8),
+        0 0 60px rgba(212,175,55,.08);
+}
+
+.game-video video{
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    min-height:0;
+
+    object-fit:contain;
+    background:#000;
+}
+.game-video{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    min-height:650px;
+
+    border-radius:35px;
+
+    overflow:hidden;
+
+    background:#000;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    box-shadow:
+
+        0 40px 120px
+        rgba(0,0,0,.85),
+
+        0 0 70px
+        rgba(212,175,55,.06);
+}
+
+
+.game-video::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:2;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0,0,0,.15),
+            transparent 25%,
+            transparent 70%,
+            rgba(0,0,0,.35)
+        );
+}
+
+
+.game-video video{
+
+    display:block;
+
+    width:100%;
+
+    height:0.1%;
+
+    min-height:650px;
+
+    object-fit:cover;
+
+    background:#000;
+}
+
+
+/* ================= VIDEO GLOW ================= */
+
+.video-glow{
+
+    position:absolute;
+
+    inset:-20px;
+
+    border-radius:45px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(212,175,55,.08),
+            transparent 65%
+        );
+
+    filter:blur(35px);
+
+    z-index:0;
+
+    pointer-events:none;
+}
+
+
+/* ================= BOTTOM TEXT ================= */
+
+.game-bottom{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    max-width:850px;
+
+    margin:55px auto 0;
+
+    color:
+        rgba(255,255,255,.65);
+
+    font-size:15px;
+
+    line-height:2;
+
+}
+
+
+.game-bottom strong{
+
+    color:#FFD700;
+}
+
+
+/* ================= TABLET ================= */
+
+@media(max-width:900px){
+
+    .game-project{
+
+        padding:
+            110px 5% 120px;
+    }
+
+
+    .game-card{
+
+        padding:
+            40px 35px;
+    }
+
+
+    .game-story{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .game-video{
+
+        min-height:1px;
+
+        border-radius:20px;
+    }
+
+.game-video{
+    min-height:100px;
+}
+
+.game-video video{
+    min-height:100px;
+}
+    .game-video video{
+
+        min-height:1px;
+    }
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+    .game-project{
+
+        padding:
+            90px 5% 100px;
+    }
+
+
+    .game-header{
+
+        margin-bottom:45px;
+    }
+
+
+    .game-label{
+
+        font-size:10px;
+
+        letter-spacing:1px;
+
+        padding:8px 15px;
+    }
+
+
+    .game-header h2{
+
+        font-size:45px;
+
+        line-height:1.15;
+    }
+
+
+    .game-card{
+
+        padding:
+            30px 22px;
+
+        border-radius:25px;
+    }
+
+
+    .game-intro{
+
+        font-size:17px;
+
+        line-height:2;
+    }
+
+
+    .story-item{
+
+        padding:20px;
+    }
+
+
+    .story-item p{
+
+        font-size:14px;
+    }
+
+
+    .game-video-space{
+
+        height:70px;
+    }
+
+
+    .game-video-title{
+
+        margin-bottom:25px;
+    }
+
+
+    .game-video-title h3{
+
+        font-size:28px;
+    }
+
+.game-video{
+    min-height:50px;
+}
+
+.game-video video{
+    min-height:50px;
+}
+
+
+    .game-bottom{
+
+        font-size:13px;
+    }
+
+    .video-box{
+  width:100%;
+  max-width:1000px;
+  height:60px; /* تم تصغير الطول فقط */
+  margin:50px auto 0;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 40px rgba(212,175,55,0.08);
+  background:#000;
+}
+
+.video-box video{
+  width:60%;
+  height:50%;
+  object-fit:cover;
+  display:block;
+}
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     GAME PROJECT
+===================================================== -->
+
+<section class="game-project">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="game-header">
+
+        <div class="game-label">
+            MY CREATIVE PROJECT
+        </div>
+
+        <h2>
+            مشروع الألعاب
+        </h2>
+
+    </div>
+
+
+    <!-- ================= DESCRIPTION CARD ================= -->
+
+    <div class="game-card">
+
+        <div class="game-card-content">
+
+
+            <p class="game-intro">
+
+                <strong>صممت وطورت لعبة إلكترونية تفاعلية</strong>
+                باستخدام برنامج
+                <strong>GameMaker</strong>،
+                وكانت هذه التجربة من أبرز المشاريع التي
+                طبقت من خلالها مهاراتي في البرمجة والتصميم
+                وحل المشكلات، وحولت من خلالها فكرة إبداعية
+                إلى تجربة لعب متكاملة.
+
+            </p>
+
+
+            <div class="game-story">
+
+
+                <!-- ITEM 1 -->
+
+                <div class="story-item">
+
+                    <span class="story-icon">
+                        🎮
+                    </span>
+
+                    <h3>
+                        فكرة اللعبة
+                    </h3>
+
+                    <p>
+
+                        صممت لعبة مستوحاة من شخصية
+                        <strong>دورا</strong>،
+                        تعتمد على المغامرة والاستكشاف
+                        والتحدي، مع تصميم تجربة لعب
+                        متنوعة تجمع بين المتعة والتفاعل.
+
+                    </p>
+
+                </div>
+
+
+                <!-- ITEM 2 -->
+
+                <div class="story-item">
+
+                    <span class="story-icon">
+                        🌍
+                    </span>
+
+                    <h3>
+                        أربع مراحل مختلفة
+                    </h3>
+
+                    <p>
+
+                        تحتوي اللعبة على أربع مراحل،
+                        لكل مرحلة بيئة وأجواء وتحديات
+                        مختلفة:
+
+                        <strong>
+                            الطبيعة، الجليد، النار،
+                            والكريستال.
+                        </strong>
+
+                    </p>
+
+                </div>
+
+
+                <!-- ITEM 3 -->
+
+                <div class="story-item">
+
+                    <span class="story-icon">
+                        🏆
+                    </span>
+
+                    <h3>
+                        المشاركة في المعرض
+                    </h3>
+
+                    <p>
+
+                        شاركت بمشروعي في معرض
+                        <strong>بيتك</strong>
+                        على مستوى المملكة،
+                        حيث أتيحت لي فرصة عرض لعبتي
+                        أمام زوار المعرض وشرح فكرة
+                        المشروع وطريقة تطويره.
+
+                    </p>
+
+                </div>
+
+
+                <!-- ITEM 4 -->
+
+                <div class="story-item">
+
+                    <span class="story-icon">
+                        📋
+                    </span>
+
+                    <h3>
+                        تقييم وتطوير
+                    </h3>
+
+                    <p>
+
+                        قمت بإعداد نماذج تقييم خاصة
+                        بالمشروع، وجمعت آراء وملاحظات
+                        الزوار حول تجربة اللعبة،
+                        بهدف الاستفادة منها في تطوير
+                        اللعبة وتحسينها مستقبلًا.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================= ACHIEVEMENT ================= -->
+
+            <p class="game-final">
+
+                كان من المميز بالنسبة لي أن أعرض مشروعي
+                أمام الزوار، ومن بينهم
+                <strong>مدير التربية والتعليم</strong>،
+                مما منحني تجربة حقيقية في تقديم مشروعي
+                والتحدث عنه أمام الآخرين.
+
+                <br><br>
+
+                هذه التجربة عززت لدي الرغبة في
+                <strong>التعلم المستمر وتطوير قدراتي</strong>
+                في البرمجة والتصميم والتكنولوجيا،
+                وأسعى دائمًا إلى تحويل أفكاري إلى مشاريع
+                عملية وتطويرها خطوة بعد خطوة.
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SPACE ================= -->
+
+    <div class="game-video-space"></div>
+
+
+    <!-- ================= VIDEO TITLE ================= -->
+
+    <div class="game-video-title">
+
+        <span>
+            GAMEPLAY
+        </span>
+
+        <h3>
+            شاهد <b>تجربة اللعبة</b>
+        </h3>
+
+    </div>
+
+
+    <!-- ================= VIDEO ================= -->
+
+    <div class="video-glow"></div>
+
+    <div class="game-video">
+
+        <video
+            controls
+            playsinline
+            preload="metadata"
+        >
+
+            <source
+                src="فيديو عن اللعبة نهائية.mp4"
+                type="video/mp4"
+            >
+
+            متصفحك لا يدعم تشغيل الفيديو.
+
+        </video>
+
+    </div>
+
+
+    <!-- ================= BOTTOM ================= -->
+
+    <div class="game-bottom">
+
+        <strong>من الفكرة إلى التجربة.</strong>
+
+        مشروع بدأ بفكرة،
+        وتحول إلى لعبة،
+        ثم إلى تجربة حقيقية أمام الجمهور.
+
+    </div>
+
+
+</section>
+<!-- =====================================================
+     APP PROJECT — APPLE STYLE
+===================================================== -->
+
+<style>
+
+/* ================= APP PROJECT ================= */
+
+.app-project{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+
+    padding:140px 6% 150px;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 25%,
+            rgba(70,140,255,.14),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(212,175,55,.10),
+            transparent 35%
+        ),
+        #030303;
+}
+
+
+/* ================= BACKGROUND LIGHT ================= */
+
+.app-project::before{
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    top:-250px;
+    left:-200px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(60,130,255,.12),
+            transparent 70%
+        );
+
+    filter:blur(35px);
+
+    pointer-events:none;
+}
+
+
+.app-project::after{
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    bottom:-250px;
+    right:-180px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212,175,55,.10),
+            transparent 70%
+        );
+
+    filter:blur(35px);
+
+    pointer-events:none;
+}
+
+
+/* ================= HEADER ================= */
+
+.app-header{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:1200px;
+
+    margin:0 auto 70px;
+
+    text-align:center;
+}
+
+
+.app-label{
+
+    display:inline-block;
+
+    margin-bottom:22px;
+
+    padding:9px 20px;
+
+    border-radius:50px;
+
+    color:#70a7ff;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    background:
+        rgba(70,140,255,.08);
+
+    border:
+        1px solid
+        rgba(70,140,255,.30);
+
+    box-shadow:
+        0 0 30px
+        rgba(70,140,255,.08);
+
+    backdrop-filter:blur(10px);
+}
+
+
+.app-header h2{
+
+    margin:0;
+
+    font-size:
+        clamp(
+            45px,
+            7vw,
+            90px
+        );
+
+    font-weight:800;
+
+    line-height:1.05;
+
+    background:
+        linear-gradient(
+            110deg,
+            #ffffff 10%,
+            #70a7ff 45%,
+            #ffffff 70%,
+            #d4af37 100%
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    background-size:200% auto;
+
+    animation:
+        appGoldMove 5s linear infinite;
+}
+
+
+@keyframes appGoldMove{
+
+    0%{
+        background-position:0% center;
+    }
+
+    100%{
+        background-position:200% center;
+    }
+
+}
+
+
+/* ================= DESCRIPTION CARD ================= */
+
+.app-card{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    padding:55px 65px;
+
+    border-radius:35px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    backdrop-filter:blur(25px);
+
+    -webkit-backdrop-filter:blur(25px);
+
+    box-shadow:
+
+        0 30px 100px
+        rgba(0,0,0,.65),
+
+        inset 0 1px 0
+        rgba(255,255,255,.10);
+
+    overflow:hidden;
+
+    transition:
+        transform .5s ease,
+        box-shadow .5s ease;
+}
+
+
+.app-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #70a7ff,
+            white,
+            #d4af37,
+            transparent
+        );
+
+    opacity:.9;
+}
+
+
+.app-card:hover{
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+
+        0 40px 120px
+        rgba(0,0,0,.8),
+
+        0 0 60px
+        rgba(70,140,255,.08);
+}
+
+
+/* ================= TEXT ================= */
+
+.app-card-content{
+
+    direction:rtl;
+
+    text-align:right;
+}
+
+
+.app-intro{
+
+    font-size:21px;
+
+    line-height:2.15;
+
+    color:#fff;
+
+    margin-bottom:35px;
+
+    font-weight:500;
+}
+
+
+.app-intro strong{
+
+    color:#70a7ff;
+
+    font-weight:700;
+}
+
+
+/* ================= FEATURES ================= */
+
+.app-features{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:22px;
+
+    margin-top:30px;
+}
+
+
+.app-feature{
+
+    position:relative;
+
+    padding:25px;
+
+    border-radius:22px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    transition:.4s ease;
+}
+
+
+.app-feature:hover{
+
+    transform:
+        translateY(-5px);
+
+    background:
+        rgba(70,140,255,.07);
+
+    border-color:
+        rgba(70,140,255,.35);
+}
+
+
+.app-icon{
+
+    font-size:28px;
+
+    margin-bottom:12px;
+
+    display:block;
+}
+
+
+.app-feature h3{
+
+    color:#70a7ff;
+
+    font-size:18px;
+
+    margin-bottom:10px;
+}
+
+
+.app-feature p{
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:15px;
+
+    line-height:2;
+
+    margin:0;
+}
+
+
+/* ================= FINAL TEXT ================= */
+
+.app-final{
+
+    margin-top:38px;
+
+    padding-top:30px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+    font-size:17px;
+
+    line-height:2.2;
+
+    color:
+        rgba(255,255,255,.82);
+}
+
+
+.app-final strong{
+
+    color:#70a7ff;
+}
+
+
+/* ================= VIDEO SPACE ================= */
+
+.app-video-space{
+
+    height:110px;
+}
+
+
+/* ================= VIDEO TITLE ================= */
+
+.app-video-title{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    margin-bottom:35px;
+}
+
+
+.app-video-title span{
+
+    display:block;
+
+    color:
+        rgba(255,255,255,.55);
+
+    font-size:13px;
+
+    letter-spacing:3px;
+
+    margin-bottom:12px;
+}
+
+
+.app-video-title h3{
+
+    color:white;
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            48px
+        );
+
+    margin:0;
+
+    font-weight:700;
+}
+
+
+.app-video-title h3 b{
+
+    color:#70a7ff;
+}
+
+
+/* ================= PHONE VIDEO ================= */
+
+.app-video-wrapper{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+
+.app-video{
+
+    width:330px;
+
+    height:650px;
+
+    padding:10px;
+
+    border-radius:42px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c1c1c,
+            #050505
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    box-shadow:
+
+        0 40px 100px
+        rgba(0,0,0,.85),
+
+        0 0 70px
+        rgba(70,140,255,.08);
+}
+
+
+.app-video video{
+
+    display:block;
+
+    width:100%;
+
+    height:100%;
+
+    border-radius:32px;
+
+    object-fit:cover;
+
+    background:#000;
+}
+
+
+/* ================= BOTTOM TEXT ================= */
+
+.app-bottom{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    max-width:850px;
+
+    margin:55px auto 0;
+
+    color:
+        rgba(255,255,255,.65);
+
+    font-size:15px;
+
+    line-height:2;
+}
+
+
+.app-bottom strong{
+
+    color:#70a7ff;
+}
+
+
+/* ================= TABLET ================= */
+
+@media(max-width:900px){
+
+    .app-project{
+
+        padding:
+            110px 5% 120px;
+    }
+
+    .app-card{
+
+        padding:
+            40px 35px;
+    }
+
+    .app-features{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+    .app-project{
+
+        padding:
+            90px 5% 100px;
+    }
+
+    .app-header{
+
+        margin-bottom:45px;
+    }
+
+    .app-label{
+
+        font-size:10px;
+
+        letter-spacing:1px;
+
+        padding:8px 15px;
+    }
+
+    .app-header h2{
+
+        font-size:45px;
+
+        line-height:1.15;
+    }
+
+    .app-card{
+
+        padding:
+            30px 22px;
+
+        border-radius:25px;
+    }
+
+    .app-intro{
+
+        font-size:17px;
+
+        line-height:2;
+    }
+
+    .app-feature{
+
+        padding:20px;
+    }
+
+    .app-feature p{
+
+        font-size:14px;
+    }
+
+    .app-video-space{
+
+        height:80px;
+    }
+
+    .app-video-title{
+
+        margin-bottom:25px;
+    }
+
+    .app-video-title h3{
+
+        font-size:28px;
+    }
+
+    .app-video{
+
+        width:270px;
+
+        height:540px;
+
+        border-radius:35px;
+
+        padding:8px;
+    }
+
+    .app-video video{
+
+        border-radius:27px;
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     APP PROJECT
+===================================================== -->
+
+<section class="app-project">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="app-header">
+
+        <div class="app-label">
+            ANDROID APPLICATION
+        </div>
+
+        <h2>
+            مشروع التطبيقات
+        </h2>
+
+    </div>
+
+
+    <!-- ================= DESCRIPTION CARD ================= -->
+
+    <div class="app-card">
+
+        <div class="app-card-content">
+
+
+            <p class="app-intro">
+
+                <strong>
+                    صممت وطورت تطبيقًا تعريفيًا عن السياحة في الأردن
+                </strong>
+                باستخدام
+                <strong>
+                    Android Studio
+                </strong>،
+                بهدف تقديم تجربة رقمية تساعد المستخدم على
+                اكتشاف أجمل المناطق السياحية في المملكة،
+                والتعرف على أهم الأماكن التي يمكن زيارتها
+                بطريقة سهلة وتفاعلية.
+
+            </p>
+
+
+            <div class="app-features">
+
+
+                <!-- ITEM 1 -->
+
+                <div class="app-feature">
+
+                    <span class="app-icon">
+                        🇯🇴
+                    </span>
+
+                    <h3>
+                        السياحة في الأردن
+                    </h3>
+
+                    <p>
+
+                        يحتوي التطبيق على معلومات عن مجموعة
+                        من أجمل المناطق السياحية في الأردن،
+                        مع صور ومعلومات تساعد المستخدم على
+                        التعرف على الأماكن واكتشافها.
+
+                    </p>
+
+                </div>
+
+
+                <!-- ITEM 2 -->
+
+                <div class="app-feature">
+
+                    <span class="app-icon">
+                        📍
+                    </span>
+
+                    <h3>
+                        ميزة الموقع
+                    </h3>
+
+                    <p>
+
+                        أضفت ميزة الموقع لمساعدة المستخدم
+                        في التعرف على موقع المناطق السياحية
+                        والوصول إليها والاستفادة من التطبيق
+                        أثناء التخطيط للرحلات.
+
+                    </p>
+
+                </div>
+
+
+                <!-- ITEM 3 -->
+
+                <div class="app-feature">
+
+                    <span class="app-icon">
+                        🖼️
+                    </span>
+
+                    <h3>
+                        الصور والمعلومات
+                    </h3>
+
+                    <p>
+
+                        حرصت على دمج الصور مع المعلومات
+                        التعريفية لكل منطقة، حتى تكون
+                        تجربة استكشاف الأماكن أكثر وضوحًا
+                        ومتعة للمستخدم.
+
+                    </p>
+
+                </div>
+
+
+                <!-- ITEM 4 -->
+
+                <div class="app-feature">
+
+                    <span class="app-icon">
+                        ⭐
+                    </span>
+
+                    <h3>
+                        التقييم والتطوير
+                    </h3>
+
+                    <p>
+
+                        يتضمن التطبيق صفحة مخصصة للتقييم،
+                        تتيح للمستخدم إبداء رأيه حول التطبيق
+                        وتجربته، والاستفادة من الملاحظات
+                        في تطويره وتحسينه مستقبلًا.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================= FINAL TEXT ================= -->
+
+            <p class="app-final">
+
+                لم يكن هدفي إنشاء تطبيق يعرض المعلومات فقط،
+                بل أردت أن يكون المشروع
+                <strong>
+                    تجربة رقمية مفيدة للسياحة في الأردن
+                </strong>،
+                تجمع بين التصميم والمعلومات والتفاعل
+                والاستفادة من خصائص الهاتف.
+
+                <br><br>
+
+                ومن خلال هذا المشروع طورت مهاراتي في
+                <strong>
+                    تصميم التطبيقات والبرمجة وحل المشكلات
+                </strong>،
+                وأصبحت أكثر رغبة في الاستمرار بالتعلم
+                وتحويل أفكاري إلى تطبيقات ومشاريع عملية.
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SPACE ================= -->
+
+    <div class="app-video-space"></div>
+
+
+    <!-- ================= VIDEO TITLE ================= -->
+
+    <div class="app-video-title">
+
+        <span>
+            APPLICATION EXPERIENCE
+        </span>
+
+        <h3>
+            شاهد <b>تجربة التطبيق</b>
+        </h3>
+
+    </div>
+
+
+    <!-- ================= VIDEO ================= -->
+
+    <div class="app-video-wrapper">
+
+        <div class="app-video">
+
+            <video
+                controls
+                playsinline
+                preload="metadata"
+            >
+
+                <source
+                    src="APK3.mp4"
+                    type="video/mp4"
+                >
+
+                متصفحك لا يدعم تشغيل الفيديو.
+
+            </video>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BOTTOM ================= -->
+
+    <div class="app-bottom">
+
+        <strong>
+            من فكرة إلى تطبيق.
+        </strong>
+
+        مشروع يجمع بين
+        البرمجة والتصميم والمعلومات السياحية
+        لتقديم تجربة رقمية تساعد على اكتشاف
+        جمال الأردن.
+
+    </div>
+
+
+</section>
+<!-- =====================================================
+     WEBSITE PROJECT — APPLE STYLE
+===================================================== -->
+
+<style>
+
+/* ================= WEBSITE PROJECT ================= */
+
+.website-project{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+
+    padding:140px 6% 160px;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 25%,
+            rgba(90,140,255,.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(212,175,55,.10),
+            transparent 35%
+        ),
+        #030303;
+}
+
+
+/* ================= HEADER ================= */
+
+.website-header{
+    position:relative;
+    z-index:2;
+
+    max-width:1200px;
+
+    margin:0 auto 70px;
+
+    text-align:center;
+}
+
+.website-label{
+    display:inline-block;
+
+    margin-bottom:22px;
+
+    padding:9px 20px;
+
+    border-radius:50px;
+
+    color:#8ab4ff;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    background:
+        rgba(80,130,255,.08);
+
+    border:
+        1px solid
+        rgba(100,150,255,.30);
+
+    backdrop-filter:blur(10px);
+}
+
+
+.website-header h2{
+
+    margin:0;
+
+    font-size:
+        clamp(
+            45px,
+            7vw,
+            90px
+        );
+
+    font-weight:800;
+
+    line-height:1.05;
+
+    background:
+        linear-gradient(
+            110deg,
+            #ffffff,
+            #8ab4ff,
+            #ffffff,
+            #d4af37
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    background-size:200% auto;
+
+    animation:
+        websiteGradient 5s linear infinite;
+}
+
+
+@keyframes websiteGradient{
+
+    0%{
+        background-position:0% center;
+    }
+
+    100%{
+        background-position:200% center;
+    }
+
+}
+
+
+/* ================= DESCRIPTION CARD ================= */
+
+.website-card{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    padding:55px 65px;
+
+    border-radius:35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    backdrop-filter:blur(25px);
+
+    -webkit-backdrop-filter:blur(25px);
+
+    box-shadow:
+
+        0 30px 100px
+        rgba(0,0,0,.65),
+
+        inset 0 1px 0
+        rgba(255,255,255,.10);
+
+    overflow:hidden;
+
+    transition:.5s ease;
+}
+
+
+/* خط الإضاءة أعلى البطاقة */
+
+.website-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #8ab4ff,
+            white,
+            #d4af37,
+            transparent
+        );
+}
+
+
+/* تأثير عند المرور */
+
+.website-card:hover{
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+
+        0 40px 120px
+        rgba(0,0,0,.8),
+
+        0 0 50px
+        rgba(100,150,255,.08);
+}
+
+
+/* ================= TEXT ================= */
+
+.website-content{
+
+    direction:rtl;
+
+    text-align:right;
+}
+
+
+.website-intro{
+
+    font-size:22px;
+
+    line-height:2;
+
+    color:#fff;
+
+    margin-bottom:35px;
+
+    font-weight:500;
+}
+
+
+.website-intro strong{
+
+    color:#8ab4ff;
+
+    font-weight:700;
+}
+
+
+/* ================= FEATURES ================= */
+
+.website-features{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:22px;
+
+    margin-top:30px;
+}
+
+
+.website-feature{
+
+    padding:25px;
+
+    border-radius:22px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    transition:.4s ease;
+}
+
+
+.website-feature:hover{
+
+    transform:
+        translateY(-5px);
+
+    background:
+        rgba(100,150,255,.07);
+
+    border-color:
+        rgba(100,150,255,.35);
+}
+
+
+.website-feature-icon{
+
+    font-size:28px;
+
+    display:block;
+
+    margin-bottom:12px;
+}
+
+
+.website-feature h3{
+
+    color:#8ab4ff;
+
+    font-size:18px;
+
+    margin-bottom:10px;
+}
+
+
+.website-feature p{
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:15px;
+
+    line-height:2;
+
+    margin:0;
+}
+
+
+/* ================= FINAL TEXT ================= */
+
+.website-final{
+
+    margin-top:38px;
+
+    padding-top:30px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+    font-size:17px;
+
+    line-height:2.2;
+
+    color:
+        rgba(255,255,255,.82);
+}
+
+
+.website-final strong{
+
+    color:#8ab4ff;
+}
+
+
+/* ================= SPACE BEFORE VIDEO ================= */
+
+.website-video-space{
+
+    height:120px;
+}
+
+
+/* ================= VIDEO TITLE ================= */
+
+.website-video-title{
+
+    text-align:center;
+
+    margin-bottom:35px;
+}
+
+
+.website-video-title span{
+
+    display:block;
+
+    color:
+        rgba(255,255,255,.50);
+
+    font-size:13px;
+
+    letter-spacing:3px;
+
+    margin-bottom:12px;
+}
+
+
+.website-video-title h3{
+
+    color:white;
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            48px
+        );
+
+    margin:0;
+}
+
+
+.website-video-title h3 b{
+
+    color:#8ab4ff;
+}
+
+
+/* ================= VIDEO ================= */
+
+.website-video{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    max-width:1000px;
+
+    height:520px;
+
+    margin:0 auto;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    background:#000;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    box-shadow:
+
+        0 40px 120px
+        rgba(0,0,0,.85),
+
+        0 0 70px
+        rgba(100,150,255,.06);
+}
+
+
+.website-video video{
+
+    display:block;
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    background:#000;
+}
+
+
+/* ================= BOTTOM ================= */
+
+.website-bottom{
+
+    max-width:850px;
+
+    margin:55px auto 0;
+
+    text-align:center;
+
+    color:
+        rgba(255,255,255,.65);
+
+    font-size:15px;
+
+    line-height:2;
+}
+
+
+.website-bottom strong{
+
+    color:#8ab4ff;
+}
+
+
+/* ================= TABLET ================= */
+
+@media(max-width:900px){
+
+    .website-project{
+
+        padding:
+            110px 5% 120px;
+    }
+
+
+    .website-card{
+
+        padding:
+            40px 35px;
+    }
+
+
+    .website-features{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .website-video{
+
+        height:450px;
+
+        border-radius:25px;
+    }
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+    .website-project{
+
+        padding:
+            90px 5% 100px;
+    }
+
+
+    .website-header{
+
+        margin-bottom:45px;
+    }
+
+
+    .website-label{
+
+        font-size:10px;
+
+        letter-spacing:1px;
+
+        padding:8px 15px;
+    }
+
+
+    .website-header h2{
+
+        font-size:45px;
+
+        line-height:1.15;
+    }
+
+
+    .website-card{
+
+        padding:
+            30px 22px;
+
+        border-radius:25px;
+    }
+
+
+    .website-intro{
+
+        font-size:17px;
+
+        line-height:2;
+    }
+
+
+    .website-feature{
+
+        padding:20px;
+    }
+
+
+    .website-feature p{
+
+        font-size:14px;
+    }
+
+
+    .website-video-space{
+
+        height:80px;
+    }
+
+
+    .website-video-title{
+
+        margin-bottom:25px;
+    }
+
+
+    .website-video-title h3{
+
+        font-size:28px;
+    }
+
+
+    .website-video{
+
+        height:300px;
+
+        border-radius:20px;
+    }
+
+
+    .website-bottom{
+
+        font-size:13px;
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     WEBSITE PROJECT
+===================================================== -->
+
+<section class="website-project">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="website-header">
+
+        <div class="website-label">
+            MY WEB PROJECT
+        </div>
+
+        <h2>
+            مشروع الموقع
+        </h2>
+
+    </div>
+
+
+    <!-- ================= DESCRIPTION CARD ================= -->
+
+    <div class="website-card">
+
+        <div class="website-content">
+
+
+            <p class="website-intro">
+
+                <strong>
+                    صممت وطورت موقع ويب تفاعليًا
+                </strong>
+
+                باستخدام
+                <strong>
+                    Visual Studio
+                </strong>،
+                بهدف تقديم منصة متكاملة لخدمات
+                الحيوانات، تجمع بين العناية والراحة
+                وسهولة الوصول إلى الخدمات في تجربة
+                رقمية بسيطة ومنظمة.
+
+            </p>
+
+
+            <!-- ================= FEATURES ================= -->
+
+            <div class="website-features">
+
+
+                <!-- خدمة العناية -->
+
+                <div class="website-feature">
+
+                    <span class="website-feature-icon">
+                        🐾
+                    </span>
+
+                    <h3>
+                        العناية بالحيوانات
+                    </h3>
+
+                    <p>
+
+                        يوفر الموقع خدمات متخصصة
+                        للعناية بالحيوانات، مع التركيز
+                        على راحتها واحتياجاتها وتقديم
+                        تجربة مناسبة لأصحاب الحيوانات.
+
+                    </p>
+
+                </div>
+
+
+                <!-- التوصيل -->
+
+                <div class="website-feature">
+
+                    <span class="website-feature-icon">
+                        🚗
+                    </span>
+
+                    <h3>
+                        خدمة التوصيل
+                    </h3>
+
+                    <p>
+
+                        أضفت خدمة توصيل لتسهيل وصول
+                        الحيوانات إلى الخدمات المطلوبة
+                        بطريقة أكثر راحة وسهولة.
+
+                    </p>
+
+                </div>
+
+
+                <!-- الفندق -->
+
+                <div class="website-feature">
+
+                    <span class="website-feature-icon">
+                        🏨
+                    </span>
+
+                    <h3>
+                        الإقامة الفندقية
+                    </h3>
+
+                    <p>
+
+                        يتضمن الموقع خدمة إقامة فندقية
+                        للحيوانات، توفر لها مكانًا مناسبًا
+                        للراحة والرعاية أثناء فترة الإقامة.
+
+                    </p>
+
+                </div>
+
+
+                <!-- الرعاية -->
+
+                <div class="website-feature">
+
+                    <span class="website-feature-icon">
+                        ❤️
+                    </span>
+
+                    <h3>
+                        الرعاية والاهتمام
+                    </h3>
+
+                    <p>
+
+                        تم تصميم الخدمات بهدف توفير
+                        تجربة متكاملة تجمع بين الرعاية
+                        والاهتمام وراحة الحيوانات.
+
+                    </p>
+
+                </div>
+
+
+                <!-- التواصل -->
+
+                <div class="website-feature">
+
+                    <span class="website-feature-icon">
+                        💬
+                    </span>
+
+                    <h3>
+                        خدمة التواصل
+                    </h3>
+
+                    <p>
+
+                        أضفت وسيلة للتواصل تساعد
+                        المستخدم على الاستفسار والتواصل
+                        بسهولة حول الخدمات المقدمة.
+
+                    </p>
+
+                </div>
+
+
+                <!-- التقييم -->
+
+                <div class="website-feature">
+
+                    <span class="website-feature-icon">
+                        ⭐
+                    </span>
+
+                    <h3>
+                        التقييم
+                    </h3>
+
+                    <p>
+
+                        يحتوي الموقع على خدمة تقييم
+                        تتيح للمستخدمين مشاركة آرائهم
+                        حول الخدمات وتجربتهم مع الموقع.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================= FINAL TEXT ================= -->
+
+            <p class="website-final">
+
+                من خلال هذا المشروع، عملت على تحويل فكرة
+                <strong>
+                    خدمات الحيوانات
+                </strong>
+                إلى تجربة رقمية متكاملة، مع الاهتمام
+                بسهولة الاستخدام وتنظيم الخدمات وإضافة
+                خصائص تساعد المستخدم على الوصول إلى ما
+                يحتاجه بطريقة واضحة ومريحة.
+
+                <br><br>
+
+                كان هذا المشروع فرصة لتطوير مهاراتي في
+                <strong>
+                    تصميم وتطوير مواقع الويب
+                </strong>
+                وتحويل الأفكار إلى مشاريع عملية قابلة
+                للتطوير مستقبلًا.
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SPACE ================= -->
+
+    <div class="website-video-space"></div>
+
+
+    <!-- ================= VIDEO TITLE ================= -->
+
+    <div class="website-video-title">
+
+        <span>
+            WEBSITE EXPERIENCE
+        </span>
+
+        <h3>
+            شاهد <b>تجربة الموقع</b>
+        </h3>
+
+    </div>
+
+
+    <!-- ================= VIDEO ================= -->
+
+    <div class="website-video">
+
+        <video
+            controls
+            playsinline
+            preload="metadata"
+        >
+
+            <source
+                src="فيديو  موقع ثاني.mp4"
+                type="video/mp4"
+            >
+
+            متصفحك لا يدعم تشغيل الفيديو.
+
+        </video>
+
+    </div>
+
+
+    <!-- ================= BOTTOM ================= -->
+
+    <div class="website-bottom">
+
+        <strong>
+            من الفكرة إلى موقع متكامل.
+        </strong>
+
+        <br>
+
+        مشروع يجمع بين التصميم،
+        الخدمات الرقمية،
+        وتجربة المستخدم.
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     GSAP ANIMATION
+===================================================== -->
+
+<script>
+
+gsap.registerPlugin(
+  ScrollTrigger
+);
+
+gsap.utils
+  .toArray(".section")
+  .forEach(sec=>{
+
+    gsap.to(
+      sec,
+      {
+
+        opacity:1,
+
+        y:0,
+
+        scale:1,
+
+        duration:1.2,
+
+        ease:"power4.out",
+
+        scrollTrigger:{
+
+          trigger:sec,
+
+          start:"top 85%",
+
+          end:"top 40%",
+
+          scrub:true
+
+        }
+
+      }
+    );
+
+  });
+
+</script>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
